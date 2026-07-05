@@ -15,10 +15,17 @@ export function BottomNav() {
   ];
 
   return (
-    <div className="fixed bottom-3 left-1.5 right-1.5 p-4 pb-safe z-50 pointer-events-none">
+    <div className="fixed bottom-0 left-0 right-0 p-4 pb-safe z-50 pointer-events-none">
       <nav
-        className="glass-panel rounded-4xl max-w-sm mx-auto flex justify-between items-center pointer-events-auto shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-white/40"
-        style={{ padding: "4px 18px" }}
+        className="rounded-4xl max-w-sm mx-auto flex justify-between items-center pointer-events-auto border border-white/40"
+        style={{
+          padding: "6px 24px",
+          background: "var(--bg-glass)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          transform: "translateZ(0)",
+        }}
       >
         {navItems.map((item) => {
           const isActive = pathname === item.href;
@@ -30,51 +37,46 @@ export function BottomNav() {
               href={item.href}
               className="relative flex items-center justify-center"
             >
-              <motion.div
-                layout
-                transition={{ type: "spring", bounce: 0.25, duration: 2 }}
-                className="relative flex flex-col items-center justify-center rounded-4xl"
-                style={{ padding: isActive ? "10px 18px" : "10px 18px" }}
+              <div
+                className="relative flex flex-col items-center justify-center rounded-2xl"
+                style={{ padding: isActive ? "10px 18px" : "10px 14px" }}
               >
                 {isActive && (
                   <motion.div
                     layoutId="bottomNavBubble"
-                    className="absolute inset-0 rounded-4xl -z-10"
+                    className="absolute inset-0 rounded-3xl -z-10"
                     style={{
                       background:
                         "linear-gradient(135deg, var(--primary-light), var(--primary))",
+                      willChange: "transform",
                     }}
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
                   />
                 )}
 
-                <motion.div
-                  animate={{ scale: isActive ? 1.15 : 1 }}
-                  transition={{ type: "spring", bounce: 0.4, duration: 0.4 }}
-                >
-                  <Icon
-                    size={24}
-                    strokeWidth={isActive ? 2.4 : 2}
-                    className={`transition-colors duration-300 ${
-                      isActive ? "text-white" : "text-[var(--text-muted)]"
-                    }`}
-                  />
-                </motion.div>
+                <Icon
+                  size={24}
+                  strokeWidth={isActive ? 2.4 : 2}
+                  className={`transition-colors duration-200 ${
+                    isActive ? "text-white scale-110" : "text-[var(--text-muted)] scale-100"
+                  }`}
+                  style={{ transition: "transform 0.25s ease, color 0.2s ease" }}
+                />
 
                 <AnimatePresence initial={false}>
                   {isActive && (
                     <motion.span
                       initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                      animate={{ opacity: 1, height: "auto", marginTop: 0 }}
+                      animate={{ opacity: 1, height: "auto", marginTop: 4 }}
                       exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                      transition={{ duration: 0.25 }}
+                      transition={{ duration: 0.2 }}
                       className="text-[11px] font-semibold text-white whitespace-nowrap overflow-hidden"
                     >
                       {item.label}
                     </motion.span>
                   )}
                 </AnimatePresence>
-              </motion.div>
+              </div>
             </Link>
           );
         })}

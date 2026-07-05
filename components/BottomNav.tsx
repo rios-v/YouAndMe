@@ -15,7 +15,7 @@ export function BottomNav() {
   ];
 
   return (
-    <div className="fixed bottom-0.5 left-1.5 right-1.5 p-4 pb-safe z-50 pointer-events-none">
+    <div className="fixed bottom-3 left-1.5 right-1.5 p-4 pb-safe z-50 pointer-events-none">
       <nav
         className="glass-panel rounded-4xl max-w-sm mx-auto flex justify-between items-center pointer-events-auto shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-white/40"
         style={{ padding: "4px 18px" }}

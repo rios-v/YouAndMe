@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
-import { ScrollRestoration } from "@/components/ScrollRestoration";
 import { BottomNav } from "@/components/BottomNav";
 import { InstallPWA } from "@/components/InstallPWA";
 
@@ -48,7 +47,6 @@ export default function RootLayout({
           <main className="pb-24 min-h-screen">
             {children}
           </main>
-          <ScrollRestoration />
           <BottomNav />
           <InstallPWA />
         </Providers>

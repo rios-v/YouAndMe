@@ -62,10 +62,9 @@
     background: none;
     font-family: inherit;
   }
-}
 
-/* Utilities */
-.glass-panel {
+  /* Utilities */
+  .glass-panel {
   background: var(--bg-glass);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -92,3 +91,6 @@ button {
   background: none;
   font-family: inherit;
 }
+
+}
+

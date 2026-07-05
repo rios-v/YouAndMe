@@ -1,0 +1,94 @@
+"use client";
+
+import { motion, AnimatePresence } from "framer-motion";
+import { X, Feather } from "lucide-react";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+
+interface Letter {
+  id: number;
+  content: string;
+  writtenDate: string;
+  author: string;
+}
+
+interface LetterDetailModalProps {
+  letter: Letter | null;
+  onClose: () => void;
+}
+
+export function LetterDetailModal({ letter, onClose }: LetterDetailModalProps) {
+  return (
+    <AnimatePresence>
+      {letter && (
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60]"
+            onClick={onClose}
+          />
+          <motion.div
+            initial={{ opacity: 0, y: "100%" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: "100%" }}
+            transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+            className="fixed inset-x-0 bottom-0 z-[70] flex flex-col max-h-[92vh]"
+            style={{
+              background: "var(--bg-main)",
+              borderTopLeftRadius: 32,
+              borderTopRightRadius: 32,
+              boxShadow: "0 -10px 40px rgba(0,0,0,0.2)",
+            }}
+          >
+            <div className="flex justify-center pt-3 pb-1 shrink-0">
+              <div className="w-10 h-1.5 rounded-full bg-[var(--primary-light)] opacity-60" />
+            </div>
+
+            <div
+              className="flex justify-between items-center pt-2 pb-4 shrink-0"
+              style={{ paddingLeft: 24, paddingRight: 24 }}
+            >
+              <div className="flex items-center gap-2 min-w-0">
+                <div
+                  className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background: "linear-gradient(135deg, var(--primary), var(--primary-dark))" }}
+                >
+                  <Feather size={16} className="text-white" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-bold text-[var(--primary-dark)] truncate">
+                    De: {letter.author}
+                  </p>
+                  <p className="text-xs text-[var(--text-muted)] truncate">
+                    {format(new Date(letter.writtenDate), "dd 'de' MMMM, yyyy", { locale: ptBR })}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={onClose}
+                className="p-2 bg-[var(--bg-card)] rounded-full text-[var(--text-secondary)] hover:bg-[var(--primary-light)]/30 transition-colors shrink-0"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div
+              className="overflow-y-auto flex-1"
+              style={{
+                paddingLeft: 24,
+                paddingRight: 24,
+                paddingBottom: "max(28px, env(safe-area-inset-bottom))",
+              }}
+            >
+              <div className="text-[var(--text-primary)] font-playfair text-lg leading-relaxed whitespace-pre-wrap break-words">
+                {letter.content}
+              </div>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}

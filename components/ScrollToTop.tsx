@@ -33,9 +33,10 @@ export function ScrollToTop() {
         <motion.button
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
+          whileTap={{ scale: 0.78 }}
           exit={{ opacity: 0, scale: 0.8 }}
           onClick={scrollToTop}
-          className="fixed bottom-24 right-6 p-3 rounded-full bg-[var(--primary)] text-white shadow-lg z-40 hover:bg-[var(--primary-dark)] transition-colors"
+          className="fixed bottom-28 right-6 p-3 rounded-full bg-[var(--primary)] text-white shadow-lg z-40 hover:bg-[var(--primary-dark)] transition-colors"
           aria-label="Voltar ao topo"
         >
           <ArrowUp size={24} />

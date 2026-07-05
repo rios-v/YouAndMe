@@ -5,10 +5,14 @@ import { Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { AddLetterModal } from "@/components/AddLetterModal";
+import { AddLetterModal } from "@/components/Letter/AddLetterModal";
+import { LetterDetailModal } from "@/components/Letter/LetterDetailModal";
+import { LetterActionSheet } from "@/components/Letter/LetterActionSheet";
+import { ConfirmDeleteModal } from "@/components/Letter/ConfirmDeleteModal";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { EmptyState } from "@/components/EmptyState";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { useLongPress } from "@/lib/useLongPress";
 
 interface Letter {
   id: number;
@@ -17,10 +21,60 @@ interface Letter {
   author: string;
 }
 
+function LetterCard({
+  letter,
+  index,
+  onOpen,
+  onLongPress,
+}: {
+  letter: Letter;
+  index: number;
+  onOpen: () => void;
+  onLongPress: () => void;
+}) {
+  const longPress = useLongPress(onLongPress, onOpen);
+
+  return (
+    <motion.button
+      {...longPress}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1 }}
+      whileTap={{ scale: 0.98 }}
+      className="glass-panel p-6 rounded-[32px] shadow-sm relative overflow-hidden text-left w-full select-none"
+      style={{ WebkitTouchCallout: "none" }}
+    >
+      <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-[var(--primary-light)] to-transparent opacity-10" />
+
+      <div className="flex justify-between items-center mb-6 border-b border-[var(--primary-light)] border-opacity-30 pb-4">
+        <span className="text-sm font-semibold text-[var(--text-muted)]">
+          {format(new Date(letter.writtenDate), "dd 'de' MMMM, yyyy", { locale: ptBR })}
+        </span>
+        <span className="text-sm font-bold text-[var(--primary-dark)] bg-[var(--primary-light)] bg-opacity-30 px-3 py-1 rounded-full shrink-0 ml-3">
+          De: {letter.author}
+        </span>
+      </div>
+
+      <div className="text-[var(--text-primary)] font-playfair text-lg leading-relaxed break-words line-clamp-3">
+        {letter.content}
+      </div>
+
+      <p className="text-xs font-semibold text-[var(--primary)] mt-3">
+        Ler carta completa →
+      </p>
+    </motion.button>
+  );
+}
+
 export default function LettersPage() {
   const [letters, setLetters] = useState<Letter[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedLetter, setSelectedLetter] = useState<Letter | null>(null);
+  const [actionLetter, setActionLetter] = useState<Letter | null>(null);
+  const [letterToEdit, setLetterToEdit] = useState<Letter | null>(null);
+  const [letterToDelete, setLetterToDelete] = useState<Letter | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchLetters = async () => {
     setIsLoading(true);
@@ -39,59 +93,95 @@ export default function LettersPage() {
     fetchLetters();
   }, []);
 
+  const handleConfirmDelete = async () => {
+    if (!letterToDelete) return;
+    setIsDeleting(true);
+    try {
+      const res = await fetch(`/api/letters/${letterToDelete.id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Failed to delete letter");
+      await fetchLetters();
+      setLetterToDelete(null);
+    } catch (error) {
+      console.error(error);
+      alert("Ocorreu um erro ao excluir a carta.");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return (
     <div className="container pt-8 pb-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-[var(--primary-dark)]">Cartas</h1>
-        <button
-          onClick={() => setIsModalOpen(true)}
+        <motion.button
+          onClick={() => {
+            setLetterToEdit(null);
+            setIsModalOpen(true);
+          }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          whileTap={{ scale: 0.68 }}
           className="bg-[var(--primary)] text-white p-3 rounded-full shadow-md hover:bg-[var(--primary-dark)] transition-colors"
           aria-label="Escrever Carta"
         >
           <Plus size={24} />
-        </button>
+        </motion.button>
       </div>
 
       {isLoading ? (
         <LoadingSpinner />
       ) : letters.length === 0 ? (
-        <EmptyState message="Nenhuma carta escrita ainda. Deixe uma mensagem especial!" />
+        <EmptyState message="Nenhuma carta escrita ainda poxa. Deixe uma mensagem especial!" />
       ) : (
         <div className="flex flex-col gap-6">
           {letters.map((letter, index) => (
-            <motion.div
+            <LetterCard
               key={letter.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="glass-panel p-6 rounded-[32px] shadow-sm relative overflow-hidden"
-            >
-              {/* Envelope flap aesthetic */}
-              <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-[var(--primary-light)] to-transparent opacity-10" />
-              
-              <div className="flex justify-between items-center mb-6 border-b border-[var(--primary-light)] border-opacity-30 pb-4">
-                <span className="text-sm font-semibold text-[var(--text-muted)]">
-                  {format(new Date(letter.writtenDate), "dd 'de' MMMM, yyyy", { locale: ptBR })}
-                </span>
-                <span className="text-sm font-bold text-[var(--primary-dark)] bg-[var(--primary-light)] bg-opacity-30 px-3 py-1 rounded-full">
-                  De: {letter.author}
-                </span>
-              </div>
-              
-              <div className="text-[var(--text-primary)] font-playfair text-lg leading-relaxed whitespace-pre-wrap">
-                {letter.content}
-              </div>
-            </motion.div>
+              letter={letter}
+              index={index}
+              onOpen={() => setSelectedLetter(letter)}
+              onLongPress={() => setActionLetter(letter)}
+            />
           ))}
         </div>
       )}
 
       <AddLetterModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+          setLetterToEdit(null);
+        }}
         onAdded={fetchLetters}
+        letterToEdit={letterToEdit}
       />
-      
+
+      <LetterDetailModal
+        letter={selectedLetter}
+        onClose={() => setSelectedLetter(null)}
+      />
+
+      <LetterActionSheet
+        isOpen={Boolean(actionLetter)}
+        onClose={() => setActionLetter(null)}
+        onEdit={() => {
+          setLetterToEdit(actionLetter);
+          setActionLetter(null);
+          setIsModalOpen(true);
+        }}
+        onDelete={() => {
+          setLetterToDelete(actionLetter);
+          setActionLetter(null);
+        }}
+      />
+
+      <ConfirmDeleteModal
+        isOpen={Boolean(letterToDelete)}
+        isDeleting={isDeleting}
+        onCancel={() => setLetterToDelete(null)}
+        onConfirm={handleConfirmDelete}
+      />
+
       <ScrollToTop />
     </div>
   );

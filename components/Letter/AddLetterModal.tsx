@@ -79,20 +79,24 @@ export function AddLetterModal({ isOpen, onClose, onAdded, letterToEdit }: AddLe
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60]"
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/50 z-[60]"
+            style={{ willChange: "opacity" }}
             onClick={onClose}
           />
           <motion.div
             initial={{ opacity: 0, y: "100%" }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "100%" }}
-            transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+            transition={{ type: "spring", bounce: 0.15, duration: 0.35 }}
             className="fixed inset-x-0 bottom-0 z-[70] flex flex-col max-h-[92vh]"
             style={{
               background: "var(--bg-main)",
               borderTopLeftRadius: 32,
               borderTopRightRadius: 32,
               boxShadow: "0 -10px 40px rgba(0,0,0,0.2)",
+              transform: "translateZ(0)",
+              willChange: "transform, opacity",
             }}
           >
             <div className="flex justify-center pt-3 pb-1 shrink-0">
@@ -116,7 +120,7 @@ export function AddLetterModal({ isOpen, onClose, onAdded, letterToEdit }: AddLe
               </div>
               <button
                 onClick={onClose}
-                className="p-2 bg-[var(--bg-card)] rounded-full text-[var(--text-secondary)] hover:bg-[var(--primary-light)]/30 transition-colors"
+                className="p-2 bg-[var(--bg-card)] rounded-full text-[var(--text-secondary)] active:bg-[var(--primary-light)]/30"
               >
                 <X size={20} />
               </button>
@@ -137,7 +141,7 @@ export function AddLetterModal({ isOpen, onClose, onAdded, letterToEdit }: AddLe
                   required
                   value={writtenDate}
                   onChange={(e) => setWrittenDate(e.target.value)}
-                  className="p-4 rounded-2xl bg-white border-2 border-transparent focus:outline-none focus:border-[var(--primary)] text-[var(--text-primary)] shadow-sm transition-colors"
+                  className="p-4 rounded-2xl bg-white border-2 border-transparent focus:outline-none focus:border-[var(--primary)] text-[var(--text-primary)] shadow-sm"
                 />
               </div>
 
@@ -151,7 +155,7 @@ export function AddLetterModal({ isOpen, onClose, onAdded, letterToEdit }: AddLe
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   rows={7}
-                  className="p-4 rounded-2xl bg-white border-2 border-transparent focus:outline-none focus:border-[var(--primary)] text-[var(--text-primary)] resize-none font-playfair text-lg leading-relaxed shadow-sm transition-colors"
+                  className="p-4 rounded-2xl bg-white border-2 border-transparent focus:outline-none focus:border-[var(--primary)] text-[var(--text-primary)] resize-none font-playfair text-lg leading-relaxed shadow-sm"
                 />
               </div>
             </form>

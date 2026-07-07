@@ -13,6 +13,7 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { EmptyState } from "@/components/EmptyState";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { useLongPress } from "@/lib/useLongPress";
+import { parseLocalDate } from "@/lib/dates";
 
 interface Letter {
   id: number;
@@ -48,7 +49,7 @@ function LetterCard({
 
       <div className="flex justify-between items-center mb-6 border-b border-[var(--primary-light)] border-opacity-30 pb-4">
         <span className="text-sm font-semibold text-[var(--text-muted)]">
-          {format(new Date(letter.writtenDate), "dd 'de' MMMM, yyyy", { locale: ptBR })}
+          {format(parseLocalDate(letter.writtenDate), "dd 'de' MMMM, yyyy", { locale: ptBR })}
         </span>
         <span className="text-sm font-bold text-[var(--primary-dark)] bg-[var(--primary-light)] bg-opacity-30 px-3 py-1 rounded-full shrink-0 ml-3">
           De: {letter.author}

@@ -13,6 +13,7 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { EmptyState } from "@/components/EmptyState";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { useLongPress } from "@/lib/useLongPress";
+import { parseLocalDate } from "@/lib/dates";
 
 interface TimelineItem {
   id: number;
@@ -51,7 +52,7 @@ function TimelineCard({
       >
         <div className="flex justify-between items-center mb-3">
           <span className="text-sm font-semibold text-[var(--primary-dark)] bg-[var(--primary-light)] bg-opacity-30 px-3 py-1 rounded-full">
-            {format(new Date(item.eventDate), "dd 'de' MMMM, yyyy", { locale: ptBR })}
+            {format(parseLocalDate(item.eventDate), "dd 'de' MMMM, yyyy", { locale: ptBR })}
           </span>
           <span className="text-xs text-[var(--text-muted)] italic">
             por {item.author}

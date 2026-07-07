@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Feather } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { parseLocalDate } from "@/lib/dates";
 
 interface Letter {
   id: number;
@@ -26,20 +27,24 @@ export function LetterDetailModal({ letter, onClose }: LetterDetailModalProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60]"
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/50 z-[60]"
+            style={{ willChange: "opacity" }}
             onClick={onClose}
           />
           <motion.div
             initial={{ opacity: 0, y: "100%" }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "100%" }}
-            transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+            transition={{ type: "spring", bounce: 0.15, duration: 0.35 }}
             className="fixed inset-x-0 bottom-0 z-[70] flex flex-col max-h-[92vh]"
             style={{
               background: "var(--bg-main)",
               borderTopLeftRadius: 32,
               borderTopRightRadius: 32,
               boxShadow: "0 -10px 40px rgba(0,0,0,0.2)",
+              transform: "translateZ(0)",
+              willChange: "transform, opacity",
             }}
           >
             <div className="flex justify-center pt-3 pb-1 shrink-0">
@@ -62,13 +67,13 @@ export function LetterDetailModal({ letter, onClose }: LetterDetailModalProps) {
                     De: {letter.author}
                   </p>
                   <p className="text-xs text-[var(--text-muted)] truncate">
-                    {format(new Date(letter.writtenDate), "dd 'de' MMMM, yyyy", { locale: ptBR })}
+                    {format(parseLocalDate(letter.writtenDate), "dd 'de' MMMM, yyyy", { locale: ptBR })}
                   </p>
                 </div>
               </div>
               <button
                 onClick={onClose}
-                className="p-2 bg-[var(--bg-card)] rounded-full text-[var(--text-secondary)] hover:bg-[var(--primary-light)]/30 transition-colors shrink-0"
+                className="p-2 bg-[var(--bg-card)] rounded-full text-[var(--text-secondary)] active:bg-[var(--primary-light)]/30 shrink-0"
               >
                 <X size={20} />
               </button>

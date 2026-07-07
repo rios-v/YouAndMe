@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Camera } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { parseLocalDate } from "@/lib/dates";
 
 interface TimelineItem {
   id: number;
@@ -67,7 +68,7 @@ export function TimelineDetailModal({ item, onClose }: TimelineDetailModalProps)
                     por {item.author}
                   </p>
                   <p className="text-xs text-[var(--text-muted)] truncate">
-                    {format(new Date(item.eventDate), "dd 'de' MMMM, yyyy", { locale: ptBR })}
+                    {format(parseLocalDate(item.eventDate), "dd 'de' MMMM, yyyy", { locale: ptBR })}
                   </p>
                 </div>
               </div>

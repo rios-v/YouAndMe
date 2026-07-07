@@ -10,13 +10,11 @@ export function getTimeTogether(startDate: Date) {
   const totalDays = differenceInDays(now, startDate);
   const years = differenceInYears(now, startDate);
   
-  // Create a date for the most recent anniversary
   const lastAnniversary = new Date(startDate);
   lastAnniversary.setFullYear(lastAnniversary.getFullYear() + years);
   
   const months = differenceInMonths(now, lastAnniversary);
   
-  // Create a date for the most recent month anniversary
   const lastMonthAnniversary = new Date(lastAnniversary);
   lastMonthAnniversary.setMonth(lastMonthAnniversary.getMonth() + months);
   
@@ -39,4 +37,9 @@ export function formatTimeTogether(time: { days: number; months: number; years: 
   }
   
   return parts.join(", ");
+}
+
+export function parseLocalDate(dateString: string): Date {
+  const [year, month, day] = dateString.split("T")[0].split("-").map(Number);
+  return new Date(year, month - 1, day);
 }

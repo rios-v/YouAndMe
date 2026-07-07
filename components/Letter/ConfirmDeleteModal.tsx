@@ -20,8 +20,7 @@ export function ConfirmDeleteModal({ isOpen, isDeleting, onCancel, onConfirm }: 
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 bottom-0 bg-black/50 z-[80]"
-            style={{ top: "env(safe-area-inset-top)", willChange: "opacity" }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[80]"
             onClick={onCancel}
           />
           <motion.div

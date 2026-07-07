@@ -32,7 +32,6 @@ export function LetterActionSheet({ isOpen, onClose, onEdit, onDelete }: LetterA
             className="fixed inset-x-0 bottom-0 z-[90] px-4"
             style={{
               paddingBottom: "max(20px, env(safe-area-inset-bottom))",
-              willChange: "transform, opacity",
             }}
           >
             <div className="max-w-sm mx-auto flex flex-col gap-2">

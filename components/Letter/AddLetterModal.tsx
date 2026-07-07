@@ -95,8 +95,6 @@ export function AddLetterModal({ isOpen, onClose, onAdded, letterToEdit }: AddLe
               borderTopLeftRadius: 32,
               borderTopRightRadius: 32,
               boxShadow: "0 -10px 40px rgba(0,0,0,0.2)",
-              transform: "translateZ(0)",
-              willChange: "transform, opacity",
             }}
           >
             <div className="flex justify-center pt-3 pb-1 shrink-0">

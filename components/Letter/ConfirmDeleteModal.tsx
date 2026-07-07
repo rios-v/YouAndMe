@@ -30,7 +30,6 @@ export function ConfirmDeleteModal({ isOpen, isDeleting, onCancel, onConfirm }: 
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ type: "spring", bounce: 0.2, duration: 0.35 }}
             className="fixed inset-0 z-[90] flex items-center justify-center px-6"
-            style={{ willChange: "transform, opacity" }}
           >
             <div
               className="w-full max-w-sm rounded-3xl p-6 text-center"

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description: "Nosso cantinho especial",
   appleWebApp: {
     capable: true,
-    // statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
     title: "NósDois",
   },
 };

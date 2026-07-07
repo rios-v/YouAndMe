@@ -19,20 +19,16 @@ export function LetterActionSheet({ isOpen, onClose, onEdit, onDelete }: LetterA
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 bottom-0 bg-black/40 z-[80]"
-            style={{ top: "env(safe-area-inset-top)", willChange: "opacity" }}
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[70]"
             onClick={onClose}
           />
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
-            transition={{ type: "spring", bounce: 0.2, duration: 0.35 }}
-            className="fixed inset-x-0 bottom-0 z-[90] px-4"
-            style={{
-              paddingBottom: "max(20px, env(safe-area-inset-bottom))",
-            }}
+            transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
+            className="fixed inset-x-0 bottom-0 z-[70] px-4"
+            style={{ paddingBottom: "max(20px, env(safe-area-inset-bottom))" }}
           >
             <div className="max-w-sm mx-auto flex flex-col gap-2">
               <div

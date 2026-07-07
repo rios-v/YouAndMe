@@ -19,16 +19,15 @@ export function ConfirmDeleteModal({ isOpen, isDeleting, onCancel, onConfirm }: 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[80]"
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[70]"
             onClick={onCancel}
           />
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ type: "spring", bounce: 0.2, duration: 0.35 }}
-            className="fixed inset-0 z-[90] flex items-center justify-center px-6"
+            transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
+            className="fixed inset-0 z-[70] flex items-center justify-center px-6"
           >
             <div
               className="w-full max-w-sm rounded-3xl p-6 text-center"

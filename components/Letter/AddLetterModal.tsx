@@ -79,17 +79,14 @@ export function AddLetterModal({ isOpen, onClose, onAdded, letterToEdit }: AddLe
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 bottom-0 bg-black/50 z-[60]"
-            style={{ top: "env(safe-area-inset-top)", willChange: "opacity" }}
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50"
             onClick={onClose}
           />
           <motion.div
-            initial={{ opacity: 0, y: "100%" }}
+            initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: "100%" }}
-            transition={{ type: "spring", bounce: 0.15, duration: 0.35 }}
-            className="fixed inset-x-0 bottom-0 z-[70] flex flex-col max-h-[92vh]"
+            exit={{ opacity: 0, y: 100 }}
+            className="fixed inset-x-0 bottom-0 z-51 flex flex-col max-h-[92vh]"
             style={{
               background: "var(--bg-main)",
               borderTopLeftRadius: 32,
@@ -153,7 +150,7 @@ export function AddLetterModal({ isOpen, onClose, onAdded, letterToEdit }: AddLe
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   rows={7}
-                  className="p-4 rounded-2xl bg-white border-2 border-transparent focus:outline-none focus:border-[var(--primary)] text-[var(--text-primary)] resize-none font-playfair text-lg leading-relaxed shadow-sm"
+                  className="p-4 rounded-2xl mb-1 bg-white border-2 border-transparent focus:outline-none focus:border-[var(--primary)] text-[var(--text-primary)] resize-none font-playfair text-lg leading-relaxed shadow-sm"
                 />
               </div>
             </form>

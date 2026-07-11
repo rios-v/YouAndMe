@@ -40,7 +40,8 @@ function TimelineCard({
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: index * 0.1 }}
+      transition={{ delay: index * 0.01 }}
+      whileTap={{ scale: 0.97 }}
       className="relative"
     >
       <div className="absolute -left-[35px] top-4 w-4 h-4 rounded-full bg-[var(--primary)] border-4 border-[var(--bg-main)]" />

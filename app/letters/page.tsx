@@ -40,8 +40,8 @@ function LetterCard({
       {...longPress}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
-      whileTap={{ scale: 0.98 }}
+      transition={{ delay: index * 0.01 }}
+      whileTap={{ scale: 0.95 }}
       className="glass-panel p-6 rounded-[32px] shadow-sm relative overflow-hidden text-left w-full select-none"
       style={{ WebkitTouchCallout: "none" }}
     >

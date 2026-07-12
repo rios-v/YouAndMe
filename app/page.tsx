@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useTransform, animate } from "framer-motion";
 import { MessageCircleHeart, Heart, Sparkles, CalendarHeart } from "lucide-react";
 import { getTimeTogether, formatTimeTogether } from "@/lib/dates";
 import { useUser } from "@/lib/user-context";
+
 
 const HERO_PHOTOS = [
   "/couple-photo-1.jpg",
@@ -197,10 +198,17 @@ export default function Home() {
       </div>
 
       <div className="relative h-[42vh] w-full rounded-b-[40px] overflow-hidden shadow-sm">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url('${heroPhoto}')` }}
-        />
+        <AnimatePresence mode="sync">
+          <motion.div
+            key={heroPhoto}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url('${heroPhoto}')` }}
+          />
+        </AnimatePresence>
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-main)] to-transparent opacity-90" />
         <div className="absolute inset-0 bg-[var(--primary-dark)] opacity-20" />
 

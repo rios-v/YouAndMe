@@ -16,12 +16,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "NósDois",
+  title: "Nós Dois",
   description: "Nosso cantinho especial",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "NósDois",
+    title: "Nós Dois",
   },
 };
 
@@ -40,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${playfair.variable} ${inter.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" href="/public/apple-touch-icon.png" />
       </head>
       <body>
         <Providers>

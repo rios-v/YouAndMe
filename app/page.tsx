@@ -6,6 +6,24 @@ import { MessageCircleHeart, Heart, Sparkles, CalendarHeart } from "lucide-react
 import { getTimeTogether, formatTimeTogether } from "@/lib/dates";
 import { useUser } from "@/lib/user-context";
 
+const HERO_PHOTOS = [
+  "/couple-photo-1.jpg",
+  "/couple-photo-2.jpg",
+  "/couple-photo-3.jpg",
+  "/couple-photo-4.jpg",
+  "/couple-photo-5.jpg",
+];
+
+function getNextHeroPhoto(): string {
+  if (typeof window === "undefined") return HERO_PHOTOS[0];
+
+  const lastIndex = Number(sessionStorage.getItem("heroPhotoIndex") ?? "-1");
+  const nextIndex = (lastIndex + 1) % HERO_PHOTOS.length;
+  sessionStorage.setItem("heroPhotoIndex", String(nextIndex));
+
+  return HERO_PHOTOS[nextIndex];
+}
+
 const LOVE_QUOTES = [
   "Cada dia que passo com você é mais uma certeza que te quero para sempre.",
   "Eu te amo infinitamente!",
@@ -128,6 +146,7 @@ function getNextMonthiversary(anniversaryDate: Date) {
 
 export default function Home() {
   const { user } = useUser();
+  const [heroPhoto, setHeroPhoto] = useState<string>(HERO_PHOTOS[0]);
   const [firstConvo, setFirstConvo] = useState<{ days: number; months: number; years: number; totalDays: number } | null>(null);
   const [dating, setDating] = useState<{ days: number; months: number; years: number; totalDays: number } | null>(null);
   const [quote] = useState(() => LOVE_QUOTES[Math.floor(Math.random() * LOVE_QUOTES.length)]);
@@ -136,6 +155,8 @@ export default function Home() {
   const [milestone, setMilestone] = useState(() => getNextMonthiversary(dateDating));
 
   useEffect(() => {
+    setHeroPhoto(getNextHeroPhoto());
+
     const dateConvo = new Date(2025, 4, 9);
 
     setFirstConvo(getTimeTogether(dateConvo));
@@ -178,7 +199,7 @@ export default function Home() {
       <div className="relative h-[42vh] w-full rounded-b-[40px] overflow-hidden shadow-sm">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/couple-photo.jpg')" }}
+          style={{ backgroundImage: `url('${heroPhoto}')` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-main)] to-transparent opacity-90" />
         <div className="absolute inset-0 bg-[var(--primary-dark)] opacity-20" />

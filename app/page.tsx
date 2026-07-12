@@ -86,7 +86,7 @@ function StatCard({
             {label}
           </h2>
 
-          <div className="text-[24px] font-bold text-[var(--primary-dark)] leading-tight mb-1.5 flex flex-wrap gap-x-1.5">
+          <div className="text-[22px] font-bold text-[var(--primary-dark)] leading-tight mb-1.5 flex flex-wrap gap-x-1.5">
             {time && (
               <>
                 {time.years > 0 && (
@@ -96,7 +96,7 @@ function StatCard({
                 )}
                 {time.months > 0 && (
                   <span>
-                    <AnimatedNumber value={time.months} /> mês{time.months !== 1 ? "es" : ""}
+                    <AnimatedNumber value={time.months} /> mes{time.months !== 1 ? "es" : ""}
                   </span>
                 )}
                 <span>
@@ -259,7 +259,7 @@ export default function Home() {
               <h2 className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-1.5">
                 Próximo Mêsversário
               </h2>
-              <p className="text-[24px] font-bold text-[var(--primary-dark)] leading-tight mb-1.5">
+              <p className="text-[22px] font-bold text-[var(--primary-dark)] leading-tight mb-1.5">
                 Faltam <AnimatedNumber value={milestone.daysLeft} /> dia{milestone.daysLeft !== 1 ? "s" : ""}
               </p>
               <p className="text-[var(--text-secondary)] text-xs">

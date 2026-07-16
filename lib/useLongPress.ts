@@ -2,7 +2,7 @@
 
 import { useRef, useCallback } from "react";
 
-export function useLongPress(onLongPress: () => void, onClick: () => void, delay = 500) {
+export function useLongPress(onLongPress: () => void, onClick: () => void, delay = 1000) {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const triggered = useRef(false);
 

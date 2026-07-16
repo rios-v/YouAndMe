@@ -115,7 +115,7 @@ function StatCard({
                 )}
                 {time.months > 0 && (
                   <span>
-                    <AnimatedNumber value={time.months} /> mes{time.months !== 1 ? "es" : ""}
+                    <AnimatedNumber value={time.months} /> {time.months === 1 ? "mês" : "meses"}
                   </span>
                 )}
                 <span>

@@ -56,7 +56,7 @@ function LetterCard({
         </span>
       </div>
 
-      <div className="text-[var(--text-primary)] font-playfair text-lg leading-relaxed break-words line-clamp-3">
+      <div className="text-[var(--text-primary)] font-playfair leading-relaxed break-words line-clamp-3">
         {letter.content}
       </div>
 

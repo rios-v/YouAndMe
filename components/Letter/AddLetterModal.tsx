@@ -65,7 +65,7 @@ export function AddLetterModal({ isOpen, onClose, onAdded, letterToEdit }: AddLe
       onClose();
     } catch (error) {
       console.error(error);
-      alert("Ocorreu um erro ao salvar a carta.");
+      alert("Ocorreu um erro ao salvar. Caso tenha enviado um vídeo, não é autorizado.");
     } finally {
       setIsSubmitting(false);
     }

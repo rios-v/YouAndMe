@@ -110,7 +110,7 @@ export function AddTimelineModal({ isOpen, onClose, onAdded, itemToEdit }: AddTi
       onClose();
     } catch (error) {
       console.error(error);
-      alert("Ocorreu um erro ao salvar o momento.");
+      alert("Ocorreu um erro ao salvar. Caso tenha enviado um vídeo, não é autorizado.");
     } finally {
       setIsSubmitting(false);
     }

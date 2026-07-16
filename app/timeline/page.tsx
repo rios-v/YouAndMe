@@ -125,16 +125,19 @@ export default function TimelinePage() {
     <div className="container pt-8 pb-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-[var(--primary-dark)]">Linha do Tempo</h1>
-        <button
+        <motion.button
           onClick={() => {
             setItemToEdit(null);
             setIsModalOpen(true);
           }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          whileTap={{ scale: 0.68 }}
           className="bg-[var(--primary)] text-white p-3 rounded-full shadow-md active:bg-[var(--primary-dark)] transition-colors"
           aria-label="Adicionar Momento"
         >
           <Plus size={24} />
-        </button>
+        </motion.button>
       </div>
 
       {isLoading ? (

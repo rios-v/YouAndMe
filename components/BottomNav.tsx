@@ -19,10 +19,8 @@ export function BottomNav() {
   return (
     <>
       <div
-        className="fixed bottom-0 left-0 right-0 h-28 z-40 pointer-events-none"
+        className="fixed bottom-0 left-0 right-0 h-28 z-40 pointer-events-none backdrop-blur-sm"
         style={{
-          backdropFilter: "blur(3px)",
-          WebkitBackdropFilter: "blur(8px)",
           maskImage: "linear-gradient(to top, black 40%, transparent 100%)",
           WebkitMaskImage: "linear-gradient(to top, black 40%, transparent 100%)",
         }}
@@ -31,7 +29,7 @@ export function BottomNav() {
       <div className="fixed bottom-3 left-1.5 right-1.5 p-4 pb-safe z-50 pointer-events-none">
         <nav
           className="glass-panel rounded-4xl max-w-sm mx-auto shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-white/40"
-          style={{ padding: "10px 12px" }}
+          style={{ padding: "12px 12px" }}
         >
           <div className="relative flex justify-between items-center pointer-events-auto">
             {activeIndex !== -1 && (

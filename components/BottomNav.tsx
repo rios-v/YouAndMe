@@ -4,14 +4,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Heart, Clock, Mail } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useUnreadBadge } from "@/lib/useUnreadBadge";
 
 export function BottomNav() {
   const pathname = usePathname();
+  const unread = useUnreadBadge();
 
   const navItems = [
-    { href: "/timeline", icon: Clock },
-    { href: "/", icon: Heart },
-    { href: "/letters", icon: Mail },
+    { href: "/timeline", icon: Clock, unread: unread.timeline },
+    { href: "/", icon: Heart, unread: false },
+    { href: "/letters", icon: Mail, unread: unread.letters },
   ];
 
   const activeIndex = navItems.findIndex((item) => item.href === pathname);
@@ -65,6 +67,7 @@ export function BottomNav() {
                       <motion.div
                         animate={{ scale: isActive ? 1.15 : 1 }}
                         transition={{ type: "spring", bounce: 0.4, duration: 0.4 }}
+                        className="relative"
                       >
                         <Icon
                           size={24}
@@ -73,21 +76,41 @@ export function BottomNav() {
                             isActive ? "text-white" : "text-[var(--text-muted)]"
                           }`}
                         />
-                      </motion.div>
 
-                      <AnimatePresence>
-                        {isActive && (
-                          <motion.span
-                            initial={{ opacity: 0, y: -4 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -4 }}
-                            transition={{ duration: 0.2 }}
-                            className="absolute top-full mt-1 text-[11px] font-semibold text-white whitespace-nowrap"
-                          >
-                          </motion.span>
-                        )}
-                      </AnimatePresence>
+                        <AnimatePresence>
+                          {item.unread && (
+                            <motion.span
+                              initial={{ scale: 0, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              exit={{ scale: 0, opacity: 0 }}
+                              transition={{ type: "spring", bounce: 0.5, duration: 0.4 }}
+                              className="absolute rounded-full"
+                              style={{
+                                top: -2,
+                                right: -2,
+                                width: 9,
+                                height: 9,
+                                background: "#ef4444",
+                                border: "2px solid white",
+                              }}
+                            />
+                          )}
+                        </AnimatePresence>
+                      </motion.div>
                     </div>
+
+                    <AnimatePresence>
+                      {isActive && (
+                        <motion.span
+                          initial={{ opacity: 0, y: -4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -4 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute top-full mt-1 text-[11px] font-semibold text-white whitespace-nowrap"
+                        >
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </Link>
               );

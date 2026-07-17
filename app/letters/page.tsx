@@ -14,6 +14,8 @@ import { EmptyState } from "@/components/EmptyState";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { useLongPress } from "@/lib/useLongPress";
 import { parseLocalDate } from "@/lib/dates";
+import { markSectionAsSeen } from "@/lib/useUnreadBadge";
+
 
 interface Letter {
   id: number;
@@ -83,6 +85,11 @@ export default function LettersPage() {
       const res = await fetch("/api/letters");
       const data = await res.json();
       setLetters(data);
+
+      if (data.length > 0) {
+        const latestId = Math.max(...data.map((l: Letter) => l.id));
+        markSectionAsSeen("letters", latestId);
+      }
     } catch (error) {
       console.error(error);
     } finally {

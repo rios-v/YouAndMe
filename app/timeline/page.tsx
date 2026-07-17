@@ -14,6 +14,8 @@ import { EmptyState } from "@/components/EmptyState";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { useLongPress } from "@/lib/useLongPress";
 import { parseLocalDate } from "@/lib/dates";
+import { markSectionAsSeen } from "@/lib/useUnreadBadge";
+
 
 interface TimelineItem {
   id: number;
@@ -94,6 +96,11 @@ export default function TimelinePage() {
       const res = await fetch("/api/timeline");
       const data = await res.json();
       setItems(data);
+
+      if (data.length > 0) {
+        const latestId = Math.max(...data.map((t: TimelineItem) => t.id));
+        markSectionAsSeen("timeline", latestId);
+      }
     } catch (error) {
       console.error(error);
     } finally {

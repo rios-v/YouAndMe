@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Loader2, Feather } from "lucide-react";
 import { useUser } from "@/lib/user-context";
+import { useDragToClose } from "@/lib/useDragToClose";
+
 
 interface Letter {
   id: number;
@@ -24,6 +26,8 @@ export function AddLetterModal({ isOpen, onClose, onAdded, letterToEdit }: AddLe
   const [content, setContent] = useState("");
   const [writtenDate, setWrittenDate] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { handleProps, panelProps } = useDragToClose({ onClose });
+
 
   const isEditing = Boolean(letterToEdit);
 
@@ -86,6 +90,7 @@ export function AddLetterModal({ isOpen, onClose, onAdded, letterToEdit }: AddLe
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 100 }}
+            {...panelProps}
             className="fixed inset-x-0 bottom-0 z-51 flex flex-col max-h-[92vh]"
             style={{
               background: "var(--bg-main)",
@@ -94,7 +99,10 @@ export function AddLetterModal({ isOpen, onClose, onAdded, letterToEdit }: AddLe
               boxShadow: "0 -10px 40px rgba(0,0,0,0.2)",
             }}
           >
-            <div className="flex justify-center pt-3 pb-1 shrink-0">
+            <div 
+              className="flex justify-center pt-3 pb-1 shrink-0"
+              {...handleProps}
+            >
               <div className="w-10 h-1.5 rounded-full bg-[var(--primary-light)] opacity-60" />
             </div>
 

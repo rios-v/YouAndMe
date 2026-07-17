@@ -5,6 +5,8 @@ import { X, Feather } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { parseLocalDate } from "@/lib/dates";
+import { useDragToClose } from "@/lib/useDragToClose";
+
 
 interface Letter {
   id: number;
@@ -19,6 +21,8 @@ interface LetterDetailModalProps {
 }
 
 export function LetterDetailModal({ letter, onClose }: LetterDetailModalProps) {
+  const { handleProps, panelProps } = useDragToClose({ onClose });
+
   return (
     <AnimatePresence>
       {letter && (
@@ -34,6 +38,7 @@ export function LetterDetailModal({ letter, onClose }: LetterDetailModalProps) {
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 100 }}
+            {...panelProps}
             className="fixed inset-x-0 bottom-0 z-51 flex flex-col max-h-[92vh]"
             style={{
               background: "var(--bg-main)",
@@ -42,7 +47,10 @@ export function LetterDetailModal({ letter, onClose }: LetterDetailModalProps) {
               boxShadow: "0 -10px 40px rgba(0,0,0,0.2)",
             }}
           >
-            <div className="flex justify-center pt-3 pb-1 shrink-0">
+            <div 
+              className="flex justify-center pt-3 pb-1 shrink-0"
+              {...handleProps}
+            >
               <div className="w-10 h-1.5 rounded-full bg-[var(--primary-light)] opacity-60" />
             </div>
 

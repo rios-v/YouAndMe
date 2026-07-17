@@ -4,12 +4,15 @@ import { useEffect, useState, useCallback } from "react";
 
 type Section = "letters" | "timeline";
 
+const UNREAD_UPDATED_EVENT = "unread-status-updated";
+
 function getLastSeenKey(section: Section) {
   return `lastSeenId:${section}`;
 }
 
 export function markSectionAsSeen(section: Section, latestId: number) {
   localStorage.setItem(getLastSeenKey(section), String(latestId));
+  window.dispatchEvent(new Event(UNREAD_UPDATED_EVENT));
 }
 
 function getLastSeenId(section: Section): number {
@@ -59,10 +62,13 @@ export function useUnreadBadge() {
     };
     document.addEventListener("visibilitychange", handleVisibility);
 
+    window.addEventListener(UNREAD_UPDATED_EVENT, checkUnread);
+
     const interval = setInterval(checkUnread, 30000);
 
     return () => {
       document.removeEventListener("visibilitychange", handleVisibility);
+      window.removeEventListener(UNREAD_UPDATED_EVENT, checkUnread);
       clearInterval(interval);
     };
   }, [checkUnread]);
